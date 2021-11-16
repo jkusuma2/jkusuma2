@@ -1,0 +1,48 @@
+[meta title:"IS 445 Homework 10" description:"Idyll Homework" /]
+
+[Header
+  fullWidth:true
+  title:"IS 445 Homework 10"
+  subtitle:"Idyll Homework"
+  author:"Jonathan Farrell Kusuma"
+  authorLink:"https://github.com/jkusuma2/jkusuma2"
+  date:"November 18, 2021"
+  background:"#222222"
+  color:"#ffffff"
+   /]
+
+# Introduction
+
+For this assignment, I will be using data from the Chicago Data Portal about Covid 19 cases in Chicago. This dataset consists of the total amounts of recorded deaths, cases and hospitalization in the Chicago area per day. This dataset is available onhttps://data.cityofchicago.org/Health-Human-Services/COVID-19-Daily-Cases-Deaths-and-Hospitalizations/naz8-j4nc. 
+
+Below shows a table of this data.
+
+[data name:"covid" source:"COVID-19_Daily_Cases__Deaths__and_Hospitalizations.csv" /]
+[Table data:covid /]
+
+
+# Visualization
+
+Below shows a line graph of either total deaths, cases or hospitalizations. Using a select component from https://idyll-lang.org/docs/component/select, I was able to create a drop down box for users to select what kind of graph to be visualized. This visualization can present the different trends on the spread of Covid in Chicago.
+
+[var name:"selectVal" value:"Deaths - Total" /]
+[Select value:selectVal options:`["Deaths - Total", "Cases - Total", "Hospitalizations - Total"]` /]
+
+[IdyllVegaLite data:covid spec:`{
+  width: 1000,
+  height: 500,
+  mark: "line",
+  encoding: {
+    x: {
+      field: "Date",
+      type: "temporal",
+      axis: {title: "Date", format: "%b %y"}
+    },
+    y: {
+      field: selectVal,
+      type: "quantitative",
+      axis: {title: selectVal}
+    }
+  }
+}` /]
+
